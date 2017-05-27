@@ -70,4 +70,64 @@ Inoisy = gaussian_noise(I);
 imagesc(Inoisy);
 colormap(gray);
 
+%% Question 3
 
+Idenoise = wavelet_denoise(Inoisy, 50);
+figure(1);
+subplot(1,2,1);
+imagesc(Inoisy);
+colormap(gray);
+title('Image bruitée');
+axis image off;
+subplot(1,2,2);
+imagesc(Idenoise);
+colormap(gray);
+title('Image débruitée (theta=50');
+axis image off;
+
+n = 100;
+thetas = logspace(-2, 2.5, n);
+PSNRs = zeros(n, 1);
+SNRs = zeros(n, 1);
+for index=1:n
+    Idenoisy = wavelet_denoise(Inoisy, thetas(index));
+    PSNRs(index) = PSNR(I, Idenoisy);
+    SNRs(index) = SNR(I, Idenoisy);
+end
+
+figure(2)
+subplot(2, 1, 1);
+plot(thetas, SNRs);
+title('SNR');
+xlabel('Theta');
+subplot(2, 1, 2);
+plot(thetas, PSNRs);
+title('PSNR');
+xlabel('Theta');
+print(2,'results/33.jpg','-djpeg');
+
+% Calcul du maximum obtenu
+[~, arg] = max(PSNRs);
+theta_opt = thetas(arg);
+
+%% Question 4
+m=9;
+denoised_I = wavelet_denoise(Inoisy, theta_opt);
+mean_denoised_I=all_shift_denoising(Inoisy,theta_opt,m);
+
+
+figure(3)
+subplot(1,2,1);
+imagesc(denoised_I);
+colormap(gray);
+title('Denoised image without using shifts')
+axis square
+axis off
+subplot(1,2,2);
+imagesc(mean_denoised_I);
+colormap(gray);
+title('Denoised image using all shifts')
+axis square
+axis off
+
+%% Question 5

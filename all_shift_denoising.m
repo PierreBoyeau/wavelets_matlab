@@ -1,4 +1,4 @@
-function mean_denoised_I=all_shifts_denoising(I,th,m)
+function mean_denoised_I=all_shift_denoising(I,th,m)
 % I is the noisy input image
 % th is the thresholding level that will be needed in the wavelet denoising
 % or dct denoising functions
