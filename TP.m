@@ -54,3 +54,20 @@ lighting gouraud; %calcule le rendu de la diffusion/reflexion de la lumiere
 
 print(7,'results/251.jpg','-djpeg');
 
+
+
+
+
+%% Partie 3 : débruitage d'image
+
+I = ReadImage('Canaletto');
+imagesc(I);
+colormap(gray);
+
+%% Question 2
+
+Inoisy = gaussian_noise(I);
+imagesc(Inoisy);
+colormap(gray);
+
+
