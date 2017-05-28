@@ -131,3 +131,25 @@ axis square
 axis off
 
 %% Question 5
+
+m_values = 1:8;
+PSNRs = zeros(8, 1);
+SNRs = zeros(8, 1);
+for index=1:8
+    m = m_values(index);
+    mean_denoised_I=all_shift_denoising(Inoisy,theta_opt,m);
+    PSNRs(index) = PSNR(I, mean_denoised_I);
+    SNRs(index) = SNR(I, mean_denoised_I);
+end
+
+figure(4);
+subplot(2, 1, 1);
+plot(m_values, SNRs);
+title('SNR');
+xlabel('m');
+subplot(2, 1, 2);
+plot(m_values, PSNRs);
+title('PSNR');
+xlabel('m');
+print(4,'results/35.jpg','-djpeg');
+
